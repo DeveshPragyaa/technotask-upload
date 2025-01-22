@@ -5,7 +5,9 @@ import re
 import time
 from datetime import datetime
 from requests.auth import HTTPBasicAuth
+from dotenv import load_dotenv
 
+load_dotenv()
 def get_transcription_files(subscription_key, transcription_id, region):
     url = f"https://{region}.api.cognitive.microsoft.com/speechtotext/v3.2/transcriptions/{transcription_id}/files"
     headers = {
@@ -128,8 +130,8 @@ def extract_content_urls_and_save_to_file(folder_name, files):
 
 
 def summarize_transcript(transcript, prompt):
-    endpoint = "https://swedencentral.api.cognitive.microsoft.com/openai/deployments/pragyaaGPT4o/chat/completions?api-version=2024-02-15-preview"
-    key = "6424c639f54c46b88f7e8dcc512dcd70"
+    endpoint = os.getenv('PRAGYAA_GPT_ENDPOINT')
+    key = os.getenv('PRAGYAA_GPT_KEY')
     retries = 0
     max_retries = 4
     full_prompt = f"{prompt}\nTranscription: {transcript}\nSummary: "
@@ -163,8 +165,8 @@ def summarize_transcript(transcript, prompt):
             return None
 
 def evaluate_transcript(transcript, prompt, max_retries=4):
-    endpoint = "https://swedencentral.api.cognitive.microsoft.com/openai/deployments/pragyaaGPT4o/chat/completions?api-version=2024-02-15-preview"
-    key = "6424c639f54c46b88f7e8dcc512dcd70"
+    endpoint =os.getenv('PRAGYAA_GPT_ENDPOINT')
+    key = os.getenv('PRAGYAA_GPT_KEY')
 
     full_prompt = f"Be quite lenient in terms of giving marks. You would be evaluating only the given transcript of the call. {prompt}\n{transcript}"
 
