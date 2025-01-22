@@ -214,8 +214,8 @@ def evaluate_transcript(transcript, prompt, max_retries=4):
     return None
 
 def rectify_json(eval, max_retries=4):
-    endpoint = "https://swedencentral.api.cognitive.microsoft.com/openai/deployments/pragyaaGPT4o/chat/completions?api-version=2024-02-15-preview"
-    key = "6424c639f54c46b88f7e8dcc512dcd70"
+    endpoint =os.getenv('PRAGYAA_GPT_ENDPOINT')
+    key = os.getenv('PRAGYAA_GPT_KEY')
 
     full_prompt = f"Only give JSON Output. Rectify the given JSON structure. There may be any mistake. Check if braces are proper, semicolons are proper. Check if it is proper JSON structure. Incorrect structure : {eval}"
 
